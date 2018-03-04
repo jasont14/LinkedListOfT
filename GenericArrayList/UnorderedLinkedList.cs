@@ -24,10 +24,12 @@ namespace UnorderedLinkedListNamespace
         //Adds Node to end of list. Overrides method of base class and satisfies interface requirements.
         public override void insert(ref T item)
         {
-            Node currentNode = new Node();            
-            currentNode.value = item; //sets value parameter of node            
+            Node currentNode = new Node();
+            //sets value parameter of node   
+            currentNode.value = item;
 
-            if (start != null) //start is Node from base class and is head of list.
+            //start is Node from base class and is head of list.
+            if (start != null) 
             {
                 end.next = currentNode; //Adds the node at the end.
                 end = currentNode; //Sets end to reference last node.
@@ -71,7 +73,8 @@ namespace UnorderedLinkedListNamespace
         {
             int result = 99;
 
-            IComparable i1 = (IComparable)item1;  //Cast as IComparables to use CompareTo for generics. Allows reuse code for all types.
+            //Cast as IComparables to use CompareTo for generics. Allows reuse code for all types.
+            IComparable i1 = (IComparable)item1;  
             IComparable i2 = (IComparable)item2;
 
             if (i1.CompareTo(i2) < 0)
@@ -102,7 +105,7 @@ namespace UnorderedLinkedListNamespace
             {
                 int j = TestOrder(max, temp.next.value);
 
-                if (j == -1)     //if -1 max preceeds or is "less than" next.value. 
+                if (j == -1)     
                 {
                     max = temp.next.value;  //Update new max.
                 }
@@ -122,9 +125,9 @@ namespace UnorderedLinkedListNamespace
             {
                 int j = TestOrder(min, temp.next.value);
 
-                if (j == 1) //if 1, min follows or is "greater than" next.value. 
+                if (j == 1) 
                 {
-                    min = temp.next.value;  //Update new min.
+                    min = temp.next.value;  
                 }
                 temp = temp.next;
             }
@@ -132,53 +135,69 @@ namespace UnorderedLinkedListNamespace
             return min;
         }
 
-        //Sorts list
-        public override void Sort() //This sort uses an insertion sort. Overrides method of base class and satisfies interface requirements.
+        
+        //Insertion sort. Overrides method of base class and satisfies interface requirements.
+        public override void Sort() 
         {
-            int length = GetListLength()+1;
-            
-            for (int j = 2; j<length; j++)  //Start at 2 since 1 is trivally sorted.
+            Node priorToEval = start;
+
+            //Since first list item is trivally sorted start eval at start.next
+            Node eval = priorToEval.next;
+            while (eval != null)
             {
-                Node evalNode = GetItemByPosition(j); //Sets the Node to evaluate
+                Node priorToCurr = null;
+                Node curr = start;
 
-                for (int i = j-1; i > 0; i--) //Sets comparison Node starting at i-1 until hits 0 = left most end of list.
+                //compare eval node to each node in list left of eval
+                while (TestOrder(eval.value, curr.value) > 0 && curr != null)
                 {
-                    Node priorNode = GetItemByPosition(i); 
-                    int result = TestOrder(evalNode.value, priorNode.value); //Comparison. Returns -1 less than, 0 equal, 1 greater than
-                    
-                    if (result == -1) //if less swap...
+                    priorToCurr = curr;
+                    curr = curr.next;
+                }
+
+                //if it returns to itself don't insert.
+                if(eval == curr)
+                {
+                    priorToEval = priorToEval.next;                        
+                }
+                else
+                {
+                    //Once eval is found to be < curr node insert it.
+                    //Remove it first
+                    priorToEval.next = eval.next;
+
+                    //Now insert it before current
+                    eval.next = curr;
+
+                    //Now link prior to eval
+                    //Prior may not exist if at start.  Check.
+                    if (priorToCurr != null)
                     {
-                        T priorValue = priorNode.value;
-                        T evalValue = evalNode.value;
-
-                        Node temp = priorNode;
-                        priorNode = evalNode;   //swap nodes.  Now priorNode.next points evalNode.next
-                        priorNode.value = priorValue;  //keep value
-
-                        evalNode = temp; //swap nodes. Now evalNode.next points to updated priorNode.  
-                        evalNode.value = evalValue; //keep value.  Swap complete.
-
-                        if (i == 1)  //if i==1 then at start of list.
-                        {
-                            start =  evalNode;
-                        }
+                        priorToCurr.next = eval;
+                    }
+                    else
+                    {
+                        start = eval;
                     }
                 }
+                    
+                eval = priorToEval.next;
+                    
             }
         }
 
         //given a numeric position in list returns Node.
         private Node GetItemByPosition(int p)
         {
-            Node result = start;  //start at left most
+            Node result = start;  
 
             int counter = 1;
-            while (result.next != null && counter < p) //count until at node prior to target.
+            while (result.next != null && counter < p) 
             {
-                result = result.next; //this ticks to target node @ counter < p.
+                result = result.next; 
                 counter++;
             }
-            return result;           //returns target node
+            return result;           
         }
 
         //Returns the number of items in list.
@@ -187,13 +206,13 @@ namespace UnorderedLinkedListNamespace
             int count = 0;
             Node temp = start;
 
-            while(temp != null)  //simple counter to count number of items in list at temp == null is end of list.
+            while(temp != null) 
             {
                 count++;
                 temp = temp.next;
             }
 
-            return count;  //return number
+            return count;  
         }
 
 

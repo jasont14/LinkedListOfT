@@ -24,9 +24,11 @@ namespace LinkedListNamespace
             public T value;
             public Node next;
         }
-        
-        protected Node start; //keeps track of head of list.
-        protected Node end = new Node(); //Keeps track of end or last node.  Allows insert at end without having to loop thru list finding Node.Next == null.
+
+        //keeps track of head of list.
+        protected Node start;
+        //Keeps track of end or last node.  Allows insert at end without having to loop thru list finding Node.Next == null.
+        protected Node end = new Node(); 
 
         //Constructor
         public LinkedList()
@@ -51,9 +53,10 @@ namespace LinkedListNamespace
         //Methos removes an item T from list.
         public void remove(ref T item)
         {
-            if (start != null) //quick check
+            //quick check to make sure there is a list.
+            if (start != null) 
             {
-                if (start.value.Equals(item)) //values of items match?
+                if (start.value.Equals(item)) 
                 {
                     Node t = start.next;
                     start = t;                    

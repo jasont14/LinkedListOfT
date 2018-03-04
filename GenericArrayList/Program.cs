@@ -52,7 +52,7 @@ namespace GenericLinkedList
         //array of strings to be inserted into list
         public static string[] TestStrings()
         {
-            string[] result = { "ZZ", "GA", "AA", "ZA", "YB", "GA", "XE", "ZA", "IO", "IOD", "GA", "ZA", "IOB" };
+            string[] result = { "ZZ", "GA", "AA", "ZA", "YB", "AA" };//, "GA", "XE", "ZA", "IO", "IOD", "GA", "ZA", "IOB" };
             return result;
         }
 
@@ -82,6 +82,7 @@ namespace GenericLinkedList
                            string y = z;
                            listString.insert(ref y);
                        }
+
 
                     PrintStringTest(listString);
                     
