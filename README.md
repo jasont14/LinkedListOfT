@@ -1,2 +1,2 @@
 # LinkedList Of T
-Linked List basic implementation with insert, add, remove, removeall, and sort with generics.  Console app to demo to test functionality with types string, int, and double.
+Linked List basic implementation with insert, add, remove, and removeall.  Insertion sort on LinkedList.  Console app to demo  functionality with types string, int, and double.
